@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <title>KIRK JERKUMS BINGO</title>
+    <link href="./VOYAGER BINGO_files/css2" rel="stylesheet">
+    <style>
+      html,body {
+        width:100%;
+        height:100%;
+        margin:0;
+        text-align:center;
+        font-family:'Oswald', sans-serif;
+      }
+      body { 
+        background-color:#000;
+        background-image:url(bg.jpg);
+        background-repeat:repeat-x;
+        background-size:contain;
+        background-position:top center;
+        padding:0;
+      }
+      p { color:#0f0; cursor: pointer; text-shadow:0px 0px 3px #000; }
+      
+      .bingo-wrap { 
+        display:flex;
+        width:100%;
+        height:100%;
+        align-items: center;
+        flex-direction: column;
+        justify-content: center;
+      }
+      table {
+        font-size:26px;
+        border-radius:5px;
+        letter-spacing:0.6px;
+        box-sizing:border-box;
+        width:70%;
+        height:90%;
+        margin:0 auto;
+        border:1px #333 solid;
+        background:#fff;
+        opacity:0.95;
+        border-collapse:collapse;
+      }
+      td { border:none; }
+      td {
+        font-weight:900;
+        padding:0;
+        border-collapse:collapse;
+        width:20%;
+        height:20%;
+        text-align:center;
+        vertical-align:middle;
+        background-size:cover;
+        background-repeat:no-repeat;
+        cursor:pointer;
+        background-position:center;
+        color:#333;
+        transition:all 0.2s ease-in;
+        position:relative;
+      }
+
+      td.active {
+        color:#fff;
+        text-shadow:0px 0px 8px #000;
+        background-color:#000;
+      }
+
+      tr:nth-child(odd) td:nth-child(even), 
+      tr:nth-child(even) td:nth-child(odd) {
+        background-color:#eee;
+      }
+
+      @media screen and (max-width : 1000px){
+        table {
+            width:100%;
+            height:100%;
+        }
+      }
+
+      @media screen and (max-width : 640px){
+        html,body { overflow:hidden; }
+        table {
+            width:100%;
+            font-size:0.8em;
+            margin:0;
+            height:50vh;
+            border:none;
+            table-layout:fixed;
+        }
+        td {
+            border:1px #333 solid;
+            word-wrap: break-word;
+        }
+
+      }
+    </style>
+  </head>
+  <body>
+    <div class="bingo-wrap">
+    <table cellspacing="0" cellpadding="0">
+    <tbody><tr>
+        <td>The Borg show up!</td>
+        <td>Close talking</td>
+        <td>Bioneural gel packs malfunction</td>
+        <td>Tom Paris witticism about alien on viewscreen</td>
+        <td>"We're venting plasma!"</td>
+    </tr>
+    <tr>
+        <td>The Only Way Out Is Through</td>
+        <td>Sparkly fabric</td>
+        <td>Doctor is funny</td>
+        <td>"Energize"</td>
+        <td>"Plot a course..."</td>
+    </tr>
+    <tr>
+        <td>Chakotay mentions his people</td>
+        <td>Shields are down to 15% or lower</td>
+        <td id="free">Free</td>
+        <td>Banger hits the ship</td>
+        <td>"SensOARS"</td>
+    </tr>
+    <tr>
+        <td>Comms are used without touching badge/panel</td>
+        <td>B'Elanna threatens physical violence</td>
+        <td>Actor from another Trek series shows up</td>
+        <td>Another shuttlecraft destroyed</td>
+        <td>Lifeforms invade the ship or take over the crew</td>
+    </tr>
+    <tr>
+        <td>Yet another warrior race shows up</td>
+        <td>Red alert!</td>
+        <td>Janeway takes no shit</td>
+        <td>Aliens steal Voyager's technology</td>
+        <td>Tuvok finds something illogical</td>
+    </tr>
+</tbody></table>
+<p><a onclick="window.location.reload()">Refresh to get a new board!</a></p>
+</div>
+<script>
+
+    var api_key = "FR57D8JH3LYH";
+    var search_terms = ["Star Trek Voyager", "Trek Janeway", "Voyager Doctor", "Neelix", "Harry Kim Voyager", "Seven of Nine", "Tom Paris Voyager", "Chakotay", "Trek Voyager Funny"];
+
+    var stuff = [
+    'First we Kirk\'em then we Jerk\'em',
+    'Cooking Meth',
+    'Bandito Boys!',
+    'Okie Dokie Artichokie',
+    'Let\'er rip tater chip',
+    'Huh?',
+    'Chatterbox!',
+    'Go to Jail',
+    'Vehicle 360',
+    'Wicked stunt!',
+    'HAWT',
+    'Stable Punchout',
+    'Knocked out',
+    'Dead',
+    'Ejaculated from car',
+    'Spanish lesson',
+    'Turtles!',
+    'Shift at Roosters or Burger Shot',
+    'Grifting Burger Shot',
+    'Make someone break',
+    'Driving the RV',
+    'Smells like Success',
+    'Freedom Seeds!',
+    'Breaking and Entering',
+    'Oxy Run',
+    'Weed Deliveries',
+    'Fishing',
+    'Legal deliveries',
+    'Participate in a Race',
+    'Rob someone',
+    'Chopping cars',
+    'Car repairs',
+    'Fires a Weapon',
+    'Get shot',
+    'Talks about food',
+    'Nearly staves to death',
+    'Runs from the cops',
+    'Hiding from the cops',
+    'RP with police',
+    'Wardrobe change',
+    'Bacon grease',
+    'Speed Talking',
+    'Gatorade Bottle Meth Instructions',
+    'Fuck Cocaine',
+    'Flabbergasted by Wealth',
+    'Tackles Marie',
+    'Something gets scuffed',
+    'Super Clean Drift',
+    'Hit the Jewelry store',
+    'Fight with Locals',
+    ];
+
+
+    document.addEventListener("DOMContentLoaded", function(){
+
+        var cells = document.querySelectorAll('td:not(#free)');
+        cells.forEach(function(cell){
+            pick = Math.floor(Math.random()*stuff.length);
+            cell.innerHTML = stuff[pick];
+            stuff.splice(pick, 1);
+        })
+
+        var allcells = document.querySelectorAll('td')
+        allcells.forEach(function(cell){
+            cell.addEventListener('click', function(){
+
+                var toggle = this.style;
+                var search_url = "https://api.tenor.com/v1/random?q=" + search_terms[Math.floor(Math.random()*search_terms.length)] + "&key=" + api_key + "&limit=5&contentfilter=low";
+                
+                cell.className = cell.className ? "" : "active";
+                
+                if(cell.className == "active"){
+                    fetch(search_url)
+                    .then(data => data.json())
+                    .then(data => {
+                        toggle.backgroundImage = "url("+data.results[0].media[0].tinygif.url+")";
+                    })
+                } else {
+                    toggle.backgroundImage = "";
+                }
+            });
+        })
+    });
+
+
+
+  </script>
+  
+</body></html>
